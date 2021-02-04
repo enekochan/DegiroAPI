@@ -318,7 +318,7 @@ class DeGiro:
                 and orderType != Order.Type.LIMIT and orderType != Order.Type.STOPLOSS:
             raise Exception('Invalid order type')
 
-        if timeType != 1 and timeType != 3:
+        if timeType != Order.Time.DAY and timeType != Order.Time.GTC:
             raise Exception('Invalid time type')
 
         place_check_order_response = self.__request(DeGiro.__PLACE_ORDER_URL + ';jsessionid=' + self.session_id, None,
@@ -351,7 +351,7 @@ class DeGiro:
                 and orderType != Order.Type.LIMIT and orderType != Order.Type.STOPLOSS:
             raise Exception('Invalid order type')
 
-        if timeType != 1 and timeType != 3:
+        if timeType != Order.Time.DAY and timeType != Order.Time.GTC:
             raise Exception('Invalid time type')
 
         place_check_order_response = self.__request(DeGiro.__PLACE_ORDER_URL + ';jsessionid=' + self.session_id, None,
