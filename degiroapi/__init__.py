@@ -19,6 +19,7 @@ class DeGiro:
     __TRANSACTIONS_URL = 'https://trader.degiro.nl/reporting/secure/v4/transactions'
     __ORDERS_URL = 'https://trader.degiro.nl/reporting/secure/v4/order-history'
     __ACCOUNT_URL = 'https://trader.degiro.nl/reporting/secure/v6/accountoverview'
+    __DIVIDENDS_URL = 'https://trader.degiro.nl/reporting/secure/v3/ca/'
 
     __PLACE_ORDER_URL = 'https://trader.degiro.nl/trading/secure/v5/checkOrder'
     __ORDER_URL = 'https://trader.degiro.nl/trading/secure/v5/order/'
@@ -154,6 +155,14 @@ class DeGiro:
         }
         return self.__request(DeGiro.__ACCOUNT_URL, None, account_payload,
                               error_message='Could not get account overview.')['data']
+
+    def future_dividends(self):
+        dividends_payload = {
+            'intAccount': self.client_info.account_id,
+            'sessionId': self.session_id
+        }
+        return self.__request(DeGiro.__DIVIDENDS_URL + str(self.client_info.account_id), None, dividends_payload,
+                              error_message='Could not get future dividends.')['data']
 
     def orders(self, from_date, to_date, not_executed=None):
         orders_payload = {
