@@ -9,6 +9,10 @@ from datetime import datetime, timedelta
 degiro = degiroapi.DeGiro()
 degiro.login("username", "password")
 
+# login with 2fa
+otp = input("Input Google Authenticator password:")
+degiro.login("username", "password", oneTimePassword=otp.strip())
+
 # logout
 degiro.logout()
 
