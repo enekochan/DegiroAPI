@@ -39,13 +39,16 @@ class DeGiro:
     client_info = any
     confirmation_id = any
 
-    def login(self, username, password):
+    def login(self, username, password, **kwargs):
         login_payload = {
             'username': username,
             'password': password,
             'isPassCodeReset': False,
             'isRedirectToMobile': False
         }
+        login_payload.update(kwargs)
+        if 'oneTimePassword' in login_payload:
+            DeGiro.__LOGIN_URL = 'https://trader.degiro.nl/login/secure/login/totp'
         login_response = self.__request(DeGiro.__LOGIN_URL, None, login_payload, request_type=DeGiro.__POST_REQUEST,
                                         error_message='Could not login.')
         self.session_id = login_response['sessionId']
